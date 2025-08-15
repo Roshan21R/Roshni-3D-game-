@@ -26,6 +26,9 @@ public class AudioManager : MonoBehaviour
     private AudioSource _musicSource;
     private AudioSource _sfxSource;
 
+    private Dictionary<string, Sound> _musicDict;
+    private Dictionary<string, Sound> _sfxDict;
+
     private void Awake()
     {
         // Singleton pattern implementation
@@ -39,6 +42,29 @@ public class AudioManager : MonoBehaviour
             _musicSource.loop = true;
 
             _sfxSource = gameObject.AddComponent<AudioSource>();
+
+            // Initialize and populate the dictionaries for fast lookups
+            _musicDict = new Dictionary<string, Sound>();
+            foreach (var sound in musicTracks)
+            {
+                if (_musicDict.ContainsKey(sound.name))
+                {
+                    Debug.LogWarning($"AudioManager: Duplicate music track name found: '{sound.name}'. It will not be added.");
+                    continue;
+                }
+                _musicDict.Add(sound.name, sound);
+            }
+
+            _sfxDict = new Dictionary<string, Sound>();
+            foreach (var sound in sfxTracks)
+            {
+                if (_sfxDict.ContainsKey(sound.name))
+                {
+                    Debug.LogWarning($"AudioManager: Duplicate SFX track name found: '{sound.name}'. It will not be added.");
+                    continue;
+                }
+                _sfxDict.Add(sound.name, sound);
+            }
         }
         else
         {
@@ -48,31 +74,31 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(string name)
     {
-        Sound s = System.Array.Find(musicTracks, sound => sound.name == name);
-        if (s == null)
+        if (_musicDict.TryGetValue(name, out Sound s))
         {
-            Debug.LogWarning("AudioManager: Music track not found: " + name);
-            return;
+            _musicSource.clip = s.clip;
+            _musicSource.volume = s.volume;
+            _musicSource.pitch = s.pitch;
+            _musicSource.loop = s.loop;
+            _musicSource.Play();
         }
-
-        _musicSource.clip = s.clip;
-        _musicSource.volume = s.volume;
-        _musicSource.pitch = s.pitch;
-        _musicSource.loop = s.loop;
-        _musicSource.Play();
+        else
+        {
+            Debug.LogWarning($"AudioManager: Music track not found: '{name}'");
+        }
     }
 
     public void PlaySfx(string name)
     {
-        Sound s = System.Array.Find(sfxTracks, sound => sound.name == name);
-        if (s == null)
+        if (_sfxDict.TryGetValue(name, out Sound s))
         {
-            Debug.LogWarning("AudioManager: SFX track not found: " + name);
-            return;
+            // We use PlayOneShot for SFX to allow multiple sounds to be played at the same time
+            // without cutting each other off. We can pass volume scale directly.
+            _sfxSource.PlayOneShot(s.clip, s.volume);
         }
-
-        // We use PlayOneShot for SFX to allow multiple sounds to be played at the same time
-        // without cutting each other off. We can pass volume scale directly.
-        _sfxSource.PlayOneShot(s.clip, s.volume);
+        else
+        {
+            Debug.LogWarning($"AudioManager: SFX track not found: '{name}'");
+        }
     }
 }
