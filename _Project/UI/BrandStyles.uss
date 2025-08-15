@@ -32,6 +32,9 @@
     /* Spacing & Radii from GDD */
     --spacing-unit: 12px;
     --border-radius: 24px;
+
+    /* Motion & Animation from GDD */
+    --motion-duration-default: 280ms;
 }
 
 /*
