@@ -1,0 +1,100 @@
+/*
+ * Roshni - Global UI Stylesheet
+ *
+ * This file defines the core visual identity of the game's UI,
+ * including colors, fonts, and base styles for common elements.
+ * It uses Unity's USS (Unity Style Sheets) format, which is a subset of CSS.
+ */
+
+/*
+ * =========================================
+ *  1. Root Variables (Color & Brand Palette)
+ * =========================================
+ * Define all brand colors here as custom properties. This allows for
+ * easy reuse and theming.
+ */
+:root {
+    /* Brand Colors */
+    --color-primary: #7AA0FF;
+    --color-secondary: #6CE7C1;
+    --color-accent: #FFD166;
+
+    /* Background & Text Colors */
+    --color-bg: #FFFFFF;
+    --color-text-primary: #1A1A1A;
+    --color-text-secondary: #4D4D4D;
+
+    /* Semantic Colors */
+    --color-success: #31C48D;
+    --color-warning: #F6AD55;
+    --color-error: #F56565;
+
+    /* Spacing & Radii from GDD */
+    --spacing-unit: 12px;
+    --border-radius: 24px;
+}
+
+/*
+ * =========================================
+ *  2. Typography
+ * =========================================
+ * Font definitions will be set here once the font assets (.ttf, .otf)
+ * are imported into the project via the Unity Editor.
+ */
+
+/*
+.unity-text {
+    font-family: 'Inter Regular';
+    color: var(--color-text-primary);
+}
+
+.h1, .unity-label--display {
+    font-family: 'Outfit Bold';
+    font-size: 32px;
+}
+
+.unity-label--numeric {
+    font-family: 'DM Sans Tabular';
+}
+*/
+
+/*
+ * =========================================
+ *  3. Common Component Styles
+ * =========================================
+ * Base styles for reusable components like buttons and cards.
+ */
+
+/*
+.button {
+    background-color: var(--color-primary);
+    color: var(--color-bg);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-unit);
+    transition-property: scale;
+    transition-duration: 0.1s;
+}
+
+.button:hover {
+    scale: 1.05;
+}
+
+.button:active {
+    scale: 0.95;
+}
+*/
+
+/*
+.card {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: var(--border-radius);
+    padding: calc(var(--spacing-unit) * 1.5);
+    -unity-background-image-tint-color: white;
+
+    /* For glassmorphism effect, a background blur would be applied
+       either via a custom shader or a UI background blur component.
+       This cannot be defined in USS alone.
+    */
+/*
+}
+*/
